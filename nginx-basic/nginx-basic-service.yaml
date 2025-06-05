@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-basic
-  namespace: web
+  namespace: testing
   annotations:
     resource.twingate.com: "true"
     resource.twingate.com/alias: "nginx.int"
