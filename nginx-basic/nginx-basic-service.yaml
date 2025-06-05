@@ -9,6 +9,6 @@ spec:
   selector:
     app: nginx-basic
   ports:
-    - port: 80
+    - port: 8080
       targetPort: 80
   type: ClusterIP
