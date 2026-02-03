@@ -1,0 +1,8 @@
+apiVersion: twingate.com/v1beta
+kind: TwingateConnector
+metadata:
+  name: my-connector
+spec:
+  imagePolicy:
+    provider: dockerhub
+    schedule: "0 0 * * *"

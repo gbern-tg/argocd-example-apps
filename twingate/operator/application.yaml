@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: twingate-operator
+  namespace: argocd
+spec:
+  project: default
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: twingate
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+  sources:
+    # 1) Operator Helm chart from OCI
+    - repoURL: oci://ghcr.io/twingate/helmcharts
+      chart: twingate-operator
+      targetRevision: "<OPERATOR_CHART_VERSION>"  # e.g. 0.x.y
+      helm:
+        releaseName: twingate-operator
+        valueFiles:
+          - $values/gitops/twingate/operator/values.yaml
+
+    # 2) Git repo source for the values file
+    - repoURL: https://github.com/<ORG>/<REPO>.git
+      targetRevision: main
+      ref: values

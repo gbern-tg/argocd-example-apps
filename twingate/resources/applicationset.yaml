@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: twingate-resources
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/<ORG>/<REPO>.git
+        revision: main
+        directories:
+          # single directory (no wildcard required)
+          - path: gitops/twingate/resources
+
+  template:
+    metadata:
+      name: twingate-resources
+    spec:
+      project: default
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: twingate
+
+      source:
+        repoURL: https://github.com/<ORG>/<REPO>.git
+        targetRevision: main
+        path: gitops/twingate/resources
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          # Critical: don't fail when CRDs aren't installed yet
+          - SkipDryRunOnMissingResource=true

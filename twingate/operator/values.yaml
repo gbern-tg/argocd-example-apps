@@ -1,0 +1,14 @@
+twingateOperator:
+  apiKey: "<TWINGATE_API_KEY>"
+  network: "<TWINGATE_NETWORK_SLUG_OR_NAME>"
+  remoteNetworkId: "<TWINGATE_REMOTE_NETWORK_ID>"
+
+kubernetes-access-gateway:
+  enabled: true
+  twingate:
+    network: "<TWINGATE_NETWORK_SLUG_OR_NAME>"
+    resource:
+      enabled: true
+      extraAnnotations:
+        resource.twingate.com/name: "My Kubernetes Cluster"
+        resource.twingate.com/alias: "my-k8s-cluster.int"
